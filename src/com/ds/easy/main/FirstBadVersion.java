@@ -18,7 +18,7 @@ public class FirstBadVersion {
 
         while (start <= end) {
             int mid = start + (end - start) / 2;
-            System.out.println("start:" + start + " end:" + end + " mid:" + mid);
+            //System.out.println("start:" + start + " end:" + end + " mid:" + mid);
             if (isBadVersion(mid)) {
                 end = mid - 1;
             } else {
