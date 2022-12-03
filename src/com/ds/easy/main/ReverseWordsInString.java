@@ -8,6 +8,24 @@ public class ReverseWordsInString {
 	}
 
     public static String reverseWords(String s) {
-		return s;
+    	String[] words = s.split(" ");
+    	StringBuffer sb = new StringBuffer(s.length());
+    	for(String word : words) {
+    		sb.append(reverseString(word.toCharArray())).append(" ");
+    	}
+		return sb.toString().trim();
+    }
+    
+    public static String reverseString(char[] s) {
+        int low = 0;
+        int high = s.length-1;
+        while(low <= high) {
+        	char temp = s[low];
+        	s[low] = s[high];
+        	s[high] = temp;
+        	low++;
+        	high--;
+        }
+        return new String(s);
     }
 }
