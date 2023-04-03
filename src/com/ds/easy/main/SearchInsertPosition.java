@@ -8,30 +8,14 @@ public class SearchInsertPosition {
 		int pos = searchInsert(nums, target);
 		System.out.println(pos);
 	}
-    public static int searchInsert(int[] nums, int target) {
-        int start = 0;
-        int end = nums.length-1;
-        int mid = 0;
-        while (start <= end) {
-            mid = start + (end - start) / 2;
-            //System.out.println("start:" + start + " end:" + end + " mid:" + mid);
-            if(nums[mid] == target) {
-            	break;
-            }
-            if (target < nums[mid]) {
-                end = mid - 1;
-            } else {
-                start = mid + 1;
-            }
+    public static int searchInsert(int[] nums, int target) {        
+        int low = 0, mid = 0, high = nums.length-1;
+        while(low<=high){
+            mid = (low+high)/2;
+            if(nums[mid] == target) return mid;
+            else if(nums[mid] > target) high = mid-1;
+            else low = mid+1;
         }
-        if(start >= end) {
-        	//System.out.println("start:" + start + " end:" + end + " mid:" + mid);
-        	if(nums[mid] >= target) {
-        		return mid; 
-        	}else{
-        		return start;
-        	}
-        }
-        return mid;
+        return low;        
     }
 }

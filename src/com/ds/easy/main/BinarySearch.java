@@ -6,7 +6,7 @@ public class BinarySearch {
 		int[] nums = {0,3,5,7,12,19,20,24,25,28,30,34,37,39,40,114,1145,1181,1234,2652};
 		//int[] nums = {34,37,39,40,114,1165};
 		//int[] nums = {2,5};		
-		int target = 2652;
+		int target = 21;
 		int result = search(nums,target);
 		System.out.println(result);
 	}
@@ -28,7 +28,10 @@ public class BinarySearch {
 				mid = (min + max) / 2;
 			}
 		}
-		return mid;
+		if(nums[mid] == target)
+			return mid;
+		else
+			return -1;
     }
 	
 }
