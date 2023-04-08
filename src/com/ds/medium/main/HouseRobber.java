@@ -7,25 +7,27 @@ public class HouseRobber {
 		System.out.println(new HouseRobber().rob(nums));
 	}
 
-    public static int rob(int[] nums) 
-	{
-	    int ifRobbedPrevious = 0; 	// max monney can get if rob current house
-	    int ifDidntRobPrevious = 0; // max money can get if not rob current house
-	    
-	    // We go through all the values, we maintain two counts, 1) if we rob this cell, 2) if we didn't rob this cell
-	    for(int i=0; i < nums.length; i++) 
-	    {
-	    	// If we rob current cell, previous cell shouldn't be robbed. So, add the current value to previous one.
-	        int currRobbed = ifDidntRobPrevious + nums[i];
-	        
-	        // If we don't rob current cell, then the count should be max of the previous cell robbed and not robbed
-	        int currNotRobbed = Math.max(ifDidntRobPrevious, ifRobbedPrevious); 
-	        
-	        // Update values for the next round
-	        ifDidntRobPrevious  = currNotRobbed;
-	        ifRobbedPrevious = currRobbed;
+	/* the order is: prev2, prev1, num  */
+	public int rob(int[] nums) {
+	    if (nums.length == 0) return 0;
+	    int prev1 = 0;
+	    int prev2 = 0;
+	    for (int num : nums) {
+	        int tmp = prev1;
+	        prev1 = Math.max(prev2 + num, prev1);
+	        prev2 = tmp;
 	    }
-	    
-	    return Math.max(ifRobbedPrevious, ifDidntRobPrevious);
+	    return prev1;
 	}
+    
+    public int robRecursive(int[] nums) {
+        return rob(nums, nums.length - 1);
+    }
+    
+    private int rob(int[] nums, int i) {
+        if (i < 0) {
+            return 0;
+        }
+        return Math.max(rob(nums, i - 2) + nums[i], rob(nums, i - 1));
+    }
 }
