@@ -1,4 +1,4 @@
-package com.algo.graph.dfs;
+package com.algo.prefixsum.array;
 
 import java.util.HashMap;
 

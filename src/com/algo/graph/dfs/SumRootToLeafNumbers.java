@@ -2,7 +2,7 @@ package com.algo.graph.dfs;
 
 import java.util.ArrayList;
 
-import com.algo.graph.dfs.PathSumIII.TreeNode;
+import com.algo.prefixsum.array.PathSumIII.TreeNode;
 
 public class SumRootToLeafNumbers {
 
