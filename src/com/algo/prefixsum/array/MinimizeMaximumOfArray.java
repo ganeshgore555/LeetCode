@@ -18,12 +18,4 @@ public class MinimizeMaximumOfArray {
         return (int)res;
     }
     
-    public int minimizeArrayValueMath(int[] A) {
-        long sum = 0, res = 0;
-        for (int i = 0; i < A.length; ++i) {
-            sum += A[i];            
-        }
-        res = Math.ceilDiv(sum , A.length);
-        return (int)res;
-    }
 }

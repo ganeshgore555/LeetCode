@@ -14,27 +14,8 @@ public class MaximumProductSubarray {
 	}
 
     public int maxProduct(int[] nums) {
-        int prev = nums[0];
-        int current = nums[0];
-        int max = nums[0];
-        for(int i = 1; i < nums.length; i++) {
-        	if(prev * nums[i] > nums[i])
-        		current = prev * nums[i];
-        	else
-        		current = nums[i];
-        	max = Math.max(max, current);
-        	prev = current;        	
-        }
-        
-        
-        prev = nums[0];
-        current = nums[0];
-        int maxNormal = nums[0];
-        for(int i = 1; i < nums.length; i++) {
-    		current = prev * nums[i];
-    		maxNormal = Math.max(maxNormal, current);
-        	prev = current;        	
-        }
-        return Math.max(maxNormal, max);
+        int max = Integer.MIN_VALUE;
+
+        return max;
     }	
 }
