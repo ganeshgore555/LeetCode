@@ -3,7 +3,7 @@ package com.algo.arrays;
 public class ShiftingLetters {
 
 	public static void main(String[] args) {
-		int[] arr = {1,2,3};
+		int[] arr = {3,5,9};
 		String input = "abc";
 		System.out.println(new ShiftingLetters().shiftingLetters(input, arr));
 	}
@@ -11,8 +11,8 @@ public class ShiftingLetters {
     public String shiftingLetters(String s, int[] shifts) {
         long[] num_shifts = new long[s.length()];
         
-        for(long r : shifts){
-            num_shifts[(int)(r-1)] ++;
+        for(int i = 0; i < shifts.length; i++) {
+        	num_shifts[i] = num_shifts[i] + shifts[i];
         }
 
         char[] ch = s.toCharArray();

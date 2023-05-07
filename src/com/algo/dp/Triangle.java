@@ -16,7 +16,7 @@ public class Triangle {
 			}
 			triangleList.add(list);
 		}
-		System.out.println(new Triangle().minimumTotalIterative(triangleList));
+		System.out.println(new Triangle().minimumTotal(triangleList));
 	}
 
     public int minimumTotal(List<List<Integer>> triangle) {
