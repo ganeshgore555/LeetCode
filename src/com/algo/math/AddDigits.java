@@ -3,7 +3,7 @@ package com.algo.math;
 public class AddDigits {
 	
 	public static void main(String[] args) {
-		int n = 38;
+		int n = 29;
 		System.out.println(new AddDigits().addDigits(n));
 	}
 	

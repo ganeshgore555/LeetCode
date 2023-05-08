@@ -1,6 +1,6 @@
 package com.algo.twopointer;
 
-public class TwoSum {
+public class TwoSumIIArrayIsSorted {
 
 	public static void main(String[] args) {
 		int[] numbers = {-1,0};
