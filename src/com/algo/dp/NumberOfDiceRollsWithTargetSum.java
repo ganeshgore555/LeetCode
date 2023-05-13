@@ -1,4 +1,4 @@
-package com.algo.backtrack;
+package com.algo.dp;
 
 import java.util.ArrayList;
 
