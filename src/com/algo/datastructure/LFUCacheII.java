@@ -2,6 +2,7 @@ package com.algo.datastructure;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -65,68 +66,25 @@ class LFUCacheII {
 	}
 	
 	
-	HashMap<Integer, Integer> map;
-	HashMap<Integer, Integer> frequencyMap;
+	HashMap<Integer, LFUValue> map;
+	HashMap<Integer, LinkedHashSet<Integer>> frequencyMap;
 	int capacity;
-	PriorityQueue<LFUKey> lfuList;
+	int minf = 0;
 	
-	final class LFUKey{
-		Integer key;
+	final class LFUValue{
 		Integer frequency;
-		Long time;
-		
-		private LFUKey(Integer key, Integer frequency, Long time) {
+		Integer value;
+		private LFUValue(Integer frequency, Integer value) {
 			super();
-			this.key = key;
 			this.frequency = frequency;
-			this.time = time;
-		}
-
-		
-		public Long getTime() {
-			return time;
-		}
-
-		public Integer getKey() {
-			return key;
-		}
-
-		public Integer getFrequency() {
-			return frequency;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + getEnclosingInstance().hashCode();
-			result = prime * result + Objects.hash(key);
-			return result;
-		}
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			LFUKey other = (LFUKey) obj;
-			if (!getEnclosingInstance().equals(other.getEnclosingInstance()))
-				return false;
-			return Objects.equals(key, other.key);
-		}
-		private LFUCacheII getEnclosingInstance() {
-			return LFUCacheII.this;
+			this.value = value;
 		}
 	}
 		
     public LFUCacheII(int capacity) {
-    	Comparator<LFUKey> comparator = Comparator.comparing(LFUKey::getFrequency).thenComparing(LFUKey::getTime);
         this.capacity = capacity;
         map = new HashMap<>(capacity);
         frequencyMap = new HashMap<>(capacity);
-        lfuList = new PriorityQueue<>(comparator);
     }
     
     public int get(int key) {
@@ -138,11 +96,10 @@ class LFUCacheII {
     }
     
     public void put(int key, int value) {
-    	Integer prevVal = map.get(key);
+    	LFUValue prevVal = map.get(key);
     	if(map.size() >= capacity && prevVal == null) {
-    		LFUKey lfuKey = lfuList.poll();
-    		map.remove(lfuKey.getKey());
-    		frequencyMap.remove(lfuKey.getKey());    		
+    		LinkedHashSet<Integer> keys = frequencyMap.get(minf);
+    		keys.iterator().next();
     	}
     	map.put(key, value);
     	if(prevVal == null) {
