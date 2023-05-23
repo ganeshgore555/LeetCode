@@ -5,46 +5,39 @@ import java.util.*;
 public class DecodeWaysII {
 
 	public static void main(String[] args) {
-		new DecodeWaysII().numDecodings("*");
+		System.out.println(new DecodeWaysII().numDecodings("121"));
 	}
 
-	
+    int M = 1000000007;
     public int numDecodings(String s) {
-		memo = new int[s.length()];
-		for(int i = 0; i < memo.length; i++)
-			memo[i] = -1;
-		char[] map = "0ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-		return numDecodingsBacktrack(0,s,map);
+        Long[] memo = new Long[s.length()];
+        return (int) ways(s, s.length() - 1, memo);
     }
-    
-    int[] memo; 
-    
-	private int numDecodingsBacktrack(int start, String digits, char[] map) {
-		if(start == digits.length()) {
-			return 1;
-		}
-		
-		if(memo[start] != -1)
-			return memo[start];
-		
-		int count = 0;
-		for(int i = start+1; i <= digits.length(); i++) {
-			if(digits.charAt(i) == '*') {
-				for(int j = 1; j <= 9; j++) {
-					String num = digits.substring(start,i-1) + j;
-					if(num.startsWith("0") || Integer.parseInt(num) > 26)
-						break;			
-					count = count + numDecodingsBacktrack(i,digits,map);
-				}
-			}else {			
-				String num = digits.substring(start,i);
-				if(num.startsWith("0") || Integer.parseInt(num) > 26)
-					break;			
-				count = count + numDecodingsBacktrack(i,digits,map);
-			}
-		}		
-		memo[start] = count;
-		return memo[start];
-	}
-    
+    public long ways(String s, int i, Long[] memo) {
+        if (i < 0)
+            return 1;
+        if (memo[i] != null)
+            return memo[i];
+        if (s.charAt(i) == '*') {
+            long res = 9 * ways(s, i - 1, memo) % M;
+            if (i > 0 && s.charAt(i - 1) == '1')
+                res = (res + 9 * ways(s, i - 2, memo)) % M;
+            else if (i > 0 && s.charAt(i - 1) == '2')
+                res = (res + 6 * ways(s, i - 2, memo)) % M;
+            else if (i > 0 && s.charAt(i - 1) == '*')
+                res = (res + 15 * ways(s, i - 2, memo)) % M;
+            memo[i] = res;
+            return memo[i];
+        }
+        long res = s.charAt(i) != '0' ? ways(s, i - 1, memo) : 0;
+        if (i > 0 && s.charAt(i - 1) == '1')
+            res = (res + ways(s, i - 2, memo)) % M;
+        else if (i > 0 && s.charAt(i - 1) == '2' && s.charAt(i) <= '6')
+            res = (res + ways(s, i - 2, memo)) % M;
+        else if (i > 0 && s.charAt(i - 1) == '*')
+            res = (res + (s.charAt(i) <= '6' ? 2 : 1) * ways(s, i - 2, memo)) % M;
+        memo[i] = res;
+        return memo[i];
+    }
+
 }

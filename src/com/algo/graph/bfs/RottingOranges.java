@@ -6,8 +6,6 @@ public class RottingOranges {
 
 	public static void main(String[] args) {
 		int[][] mat = {{2,1,1},{0,1,1},{1,0,1}};
-    	int rows = mat.length;
-    	int cols = mat[0].length;
 		System.out.println(new RottingOranges().orangesRotting(mat));
 	}
 
