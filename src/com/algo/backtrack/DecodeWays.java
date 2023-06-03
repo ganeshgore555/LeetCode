@@ -5,7 +5,7 @@ import java.util.*;
 public class DecodeWays {
 
 	public static void main(String[] args) {
-		System.out.println(new DecodeWays().numDecodings("12"));
+		System.out.println(new DecodeWays().numDecodings("121"));
 	}
 
 	

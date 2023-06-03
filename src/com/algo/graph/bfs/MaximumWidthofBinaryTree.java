@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import com.algo.graph.FindLeavesOfBinaryTree.TreeNode;
-
 public class MaximumWidthofBinaryTree {
 
 	public static void main(String[] args) {

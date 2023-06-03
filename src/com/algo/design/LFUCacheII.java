@@ -1,4 +1,4 @@
-package com.algo.datastructure;
+package com.algo.design;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -69,7 +69,7 @@ class LFUCacheII {
 	HashMap<Integer, LFUValue> map;
 	HashMap<Integer, LinkedHashSet<Integer>> frequencyMap;
 	int capacity;
-	int minf = 0;
+	int minf = 1;
 	
 	final class LFUValue{
 		Integer frequency;
@@ -88,23 +88,32 @@ class LFUCacheII {
     }
     
     public int get(int key) {
-		int val = map.getOrDefault(key,-1);
-		if(val != -1) {
+    	LFUValue lfuVal = map.get(key);
+		if(lfuVal != null) {
     		incrementFrequency(key);
+    		return lfuVal.value;
 		}
-		return val;	
+		return -1;	
     }
     
     public void put(int key, int value) {
     	LFUValue prevVal = map.get(key);
     	if(map.size() >= capacity && prevVal == null) {
-    		LinkedHashSet<Integer> keys = frequencyMap.get(minf);
-    		keys.iterator().next();
+    		LinkedHashSet<Integer> lessFrequentlyUsedKeys = frequencyMap.get(minf);
+    		if(lessFrequentlyUsedKeys != null && lessFrequentlyUsedKeys.size() > 0) {
+    			Integer keyToDelete = lessFrequentlyUsedKeys.iterator().next();
+    			map.remove(keyToDelete);
+    			lessFrequentlyUsedKeys.remove(keyToDelete);
+    			if(lessFrequentlyUsedKeys.size() == 0)
+    				frequencyMap.remove(minf);
+    		}
     	}
-    	map.put(key, value);
     	if(prevVal == null) {
-	    	frequencyMap.put(key, 1);
-	    	LFUKey newKey = new LFUKey(key, 1, System.nanoTime());
+    		LFUValue lfuVal = new LFUValue(1, value);
+    		map.put(key, lfuVal);
+    		minf = 1;
+    		LinkedHashSet<Integer> lessFrequentlyUsedKeys = frequencyMap.get(minf);
+	    	LFUValue lfuValue = new LFUValue(key, 1);
 	    	lfuList.offer(newKey);
     	}else {
     		incrementFrequency(key);
@@ -112,12 +121,26 @@ class LFUCacheII {
     }
     
     private void incrementFrequency(int key) {
-		Integer frequency = frequencyMap.get(key);
-		LFUKey tempKey = new LFUKey(key, frequency, System.nanoTime());
-		lfuList.remove(tempKey);
-		LFUKey newKey = new LFUKey(key, frequency+1, System.nanoTime());
-		lfuList.offer(newKey);
-		frequencyMap.put(key, frequency+1);
+    	LFUValue lfuVal = map.get(key);
+    	int oldFrequency = lfuVal.frequency;
+    	int newFrequency = oldFrequency++;
+    	lfuVal.frequency = newFrequency;
+    	LinkedHashSet<Integer> frequencyKeySet = frequencyMap.get(oldFrequency);
+    	frequencyKeySet.remove(key);
+    	if(frequencyKeySet.size() == 0) {
+    		frequencyMap.remove(lfuVal.frequency);
+    		if(minf == oldFrequency)
+    			minf = newFrequency;
+    	}else
+    		minf = Math.min(minf, newFrequency);
+    	
+    	LinkedHashSet<Integer> newFrequencyKeySet = frequencyMap.get(newFrequency);
+    	if(newFrequencyKeySet == null) {
+    		newFrequencyKeySet = new LinkedHashSet<Integer>();
+    		frequencyMap.put(newFrequency, newFrequencyKeySet);
+    	}
+    	
+    	newFrequencyKeySet.add(key);    	
     }
     
 }

@@ -1,4 +1,4 @@
-package com.algo.datastructure;
+package com.algo.design;
 
 import java.util.Comparator;
 import java.util.HashMap;
