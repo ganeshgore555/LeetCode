@@ -113,8 +113,7 @@ class LFUCacheII {
     		map.put(key, lfuVal);
     		minf = 1;
     		LinkedHashSet<Integer> lessFrequentlyUsedKeys = frequencyMap.get(minf);
-	    	LFUValue lfuValue = new LFUValue(key, 1);
-	    	lfuList.offer(newKey);
+    			    	
     	}else {
     		incrementFrequency(key);
     	}
