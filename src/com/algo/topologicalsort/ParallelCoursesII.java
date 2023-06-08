@@ -9,23 +9,26 @@ public class ParallelCoursesII {
 
 	public static void main(String[] args) {
 		int n = 12;
-		int[][] relations = {{1,2},{1,3},{7,5},{7,6},{4,8},{8,9},{9,10},{10,11},{11,12}};
-		int k = 2;
+		//int[][] relations = {{1,2},{1,3},{7,5},{7,6},{4,8},{8,9},{9,10},{10,11},{11,12}};
+		int[][] relations = {{11,10},{6,3},{2,5},{9,2},{4,12},{8,7},{9,5},{6,2},{7,2},{7,4},{9,3},{11,1},{4,3}};
+		int k = 3;
 		System.out.println(new ParallelCoursesII().minNumberOfSemesters(n, relations, k));
 	}
 	
 	class Node {
 		Integer node;
 		Integer outDegree;
-		private Node(Integer node, Integer outDegree) {
+		Integer depth;
+		private Node(Integer node, Integer outDegree, Integer depth) {
 			super();
 			this.node = node;
 			this.outDegree = outDegree;
+			this.depth = depth;
 		}
 		@Override
 		public String toString() {
-			return "Node [node=" + node + ", outDegree=" + outDegree + "]";
-		}		
+			return "[node=" + node + ", outDegree=" + outDegree + ", depth=" + depth + "]";
+		}
 	}
 	
     public int minNumberOfSemesters(int n, int[][] relations, int k) {
@@ -48,14 +51,17 @@ public class ParallelCoursesII {
     		}
     	}
     	
-    	PriorityQueue<Node> queue = new PriorityQueue<Node>((n1,n2) -> (n2.outDegree - n1.outDegree));  
+    	PriorityQueue<Node> queue = new PriorityQueue<Node>((n1,n2) -> n1.depth == n2.depth ? (n2.outDegree - n1.outDegree) : (n2.depth - n1.depth));  
     	
+    	HashMap<Integer,Integer> depthMap = new HashMap<>();
+    	    	
     	for(int i = 1; i < inDegreeMap.length; i++) {
     		if(inDegreeMap[i] == 0) {
-    			queue.offer(new Node(i, outDegreeMap[i]));
+    			maxDepth(i,adjNodeMap,depthMap);    			
+    			queue.offer(new Node(i, outDegreeMap[i], depthMap.get(i)));
     		}
     	}
-
+    	
     	int semester = 0;
     	int courseDone = 0;
     	while(!queue.isEmpty()) {
@@ -80,9 +86,27 @@ public class ParallelCoursesII {
     			}
     		}
     		for(Integer nextCourse : nextCourses)
-    			queue.add(new Node(nextCourse, outDegreeMap[nextCourse]));
+    			queue.add(new Node(nextCourse, outDegreeMap[nextCourse],depthMap.get(nextCourse)));
     	}
 		return courseDone == n ? semester : -1;
         
     }
+
+	private int maxDepth(int i, HashMap<Integer, ArrayList<Integer>> adjNodeMap, HashMap<Integer, Integer> depthMap) {
+		ArrayList<Integer> adjNodes = adjNodeMap.get(i);
+		if(adjNodes == null || adjNodes.size() == 0) {
+			depthMap.put(i, 1);
+			return 1;
+		}
+		if(depthMap.containsKey(i))
+			return depthMap.get(i);
+		
+		int max = 0;
+		for(Integer adjNode : adjNodes) {
+			int depth = 1 + maxDepth(adjNode,adjNodeMap,depthMap);
+			max = Math.max(max, depth);
+		}
+		depthMap.put(i, max);
+		return depthMap.get(i);
+	}
 }

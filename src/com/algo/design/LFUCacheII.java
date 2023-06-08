@@ -1,15 +1,7 @@
 package com.algo.design;
 
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 class LFUCacheII {
 	
@@ -63,13 +55,14 @@ class LFUCacheII {
 		System.out.println(cache.get(3)); // 3
 		System.out.println(cache.get(4)); //-1
 		System.out.println(cache.get(5)); // 5
+		
 	}
 	
 	
 	HashMap<Integer, LFUValue> map;
 	HashMap<Integer, LinkedHashSet<Integer>> frequencyMap;
 	int capacity;
-	int minf = 1;
+	int minf = 0;
 	
 	final class LFUValue{
 		Integer frequency;
@@ -113,8 +106,13 @@ class LFUCacheII {
     		map.put(key, lfuVal);
     		minf = 1;
     		LinkedHashSet<Integer> lessFrequentlyUsedKeys = frequencyMap.get(minf);
-    			    	
+    		if(lessFrequentlyUsedKeys == null) {
+    			lessFrequentlyUsedKeys = new LinkedHashSet<Integer>();
+    			frequencyMap.put(minf, lessFrequentlyUsedKeys);
+    		}
+    		lessFrequentlyUsedKeys.add(key);
     	}else {
+    		prevVal.value = value;
     		incrementFrequency(key);
     	}
     }
@@ -122,17 +120,18 @@ class LFUCacheII {
     private void incrementFrequency(int key) {
     	LFUValue lfuVal = map.get(key);
     	int oldFrequency = lfuVal.frequency;
-    	int newFrequency = oldFrequency++;
+    	int newFrequency = oldFrequency + 1;
     	lfuVal.frequency = newFrequency;
     	LinkedHashSet<Integer> frequencyKeySet = frequencyMap.get(oldFrequency);
-    	frequencyKeySet.remove(key);
-    	if(frequencyKeySet.size() == 0) {
-    		frequencyMap.remove(lfuVal.frequency);
-    		if(minf == oldFrequency)
-    			minf = newFrequency;
-    	}else
-    		minf = Math.min(minf, newFrequency);
-    	
+    	if(frequencyKeySet != null) { 
+    		frequencyKeySet.remove(key);
+	    	if(frequencyKeySet.size() == 0) {
+	    		frequencyMap.remove(oldFrequency);
+	    		if(minf == oldFrequency)
+	    			minf = newFrequency;
+	    	}else
+	    		minf = Math.min(minf, newFrequency);
+    	}
     	LinkedHashSet<Integer> newFrequencyKeySet = frequencyMap.get(newFrequency);
     	if(newFrequencyKeySet == null) {
     		newFrequencyKeySet = new LinkedHashSet<Integer>();
@@ -140,6 +139,5 @@ class LFUCacheII {
     	}
     	
     	newFrequencyKeySet.add(key);    	
-    }
-    
+    }    
 }
