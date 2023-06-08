@@ -1,4 +1,4 @@
-package com.algo.dp;
+package com.algo.graph.bfs;
 
 import java.util.*;
 
