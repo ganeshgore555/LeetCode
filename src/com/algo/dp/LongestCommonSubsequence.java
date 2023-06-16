@@ -45,7 +45,7 @@ public class LongestCommonSubsequence {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(new LongestCommonSubsequence().longestCommonSubsequence("abcde", "ace"));
+		System.out.println(new LongestCommonSubsequence().longestCommonSubsequence("abcede", "ace"));
 	}
 
 	public int longestCommonSubsequenceBottomUp(String text1, String text2) {

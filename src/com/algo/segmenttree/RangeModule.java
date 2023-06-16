@@ -5,8 +5,15 @@ import java.util.*;
 public class RangeModule {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		RangeModule rm = new RangeModule();
+		rm.addRange(10,180);
+		rm.addRange(150,200);
+		rm.addRange(250,500);
+		rm.queryRange(50,100);
+		rm.queryRange(180,300);
+		rm.queryRange(600,1000);
+		rm.removeRange(50,150);
+		rm.queryRange(50,100);
 	}
 
 	TreeMap<Integer,Integer> map; 
@@ -19,8 +26,8 @@ public class RangeModule {
         int start = left;
         int end = right;
 
-        while(map.floorKey(end) != null) {
-        	int prevStart = map.floorKey(end);
+        while(map.floorKey(end-1) != null) {
+        	int prevStart = map.floorKey(end-1);
         	int prevEnd = map.get(prevStart);
         	if(start >= prevEnd)
         		break;
@@ -36,14 +43,14 @@ public class RangeModule {
         int start = left;
         int end = right;
         
-        while(map.floorKey(end) != null) {
-        	int prevStart = map.floorKey(end);
+        while(map.floorKey(end-1) != null) {
+        	int prevStart = map.floorKey(end-1);
         	int prevEnd = map.get(prevStart);
         	
         	if(prevEnd < end)
         		break;
         	
-        	if(prevStart < start)
+        	if(prevStart <= start)
         		return true;
         	
         	end = prevStart;        	
@@ -52,6 +59,38 @@ public class RangeModule {
     }
     
     public void removeRange(int left, int right) {
+        int start = left;
+        int end = right;
         
+        while(map.floorKey(end-1) != null) {
+        	int prevStart = map.floorKey(end-1);
+        	int prevEnd = map.get(prevStart);
+        	
+        	if(prevEnd < start)
+        		break;
+        	
+        	if(prevEnd <= end) {
+        		if(prevStart >= start) {
+        			map.remove(prevStart);
+        			end = prevStart;
+        		}else {
+        			map.remove(prevStart);
+        			map.put(prevStart, start);
+        			break;
+        		}
+        	}else {
+        		if(prevStart >= start) {
+        			map.remove(prevStart);
+        			map.put(end, prevEnd);
+        			end = prevStart;
+        		}else {
+        			map.remove(prevStart);
+        			map.put(prevStart, start);
+        			map.put(end, prevEnd);
+        			break;
+        		}
+        		
+        	}
+        }
     }
 }

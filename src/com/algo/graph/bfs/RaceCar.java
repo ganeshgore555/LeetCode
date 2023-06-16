@@ -11,14 +11,14 @@ public class RaceCar {
 	}
 
     public int racecar(int target) {
-        return raceDP(1, 0, target, 0);	
+        return raceDP(1, 0, target);	
     }
 
     HashMap<String,Integer> memo = new HashMap<>();
     
-	private int raceDP(int speed, int pos, int target, int moves) {
+	private int raceDP(int speed, int pos, int target) {
 		if(pos == target) {
-			return moves;
+			return 0;
 		}
 				
 		if(memo.containsKey(speed + "-" + pos))
@@ -28,9 +28,9 @@ public class RaceCar {
 		int withR = Integer.MAX_VALUE;		
 		
 		if((speed > 0 && pos < target) || (pos > target && speed < 0))
-			withR = raceDP(speed * 2, pos + speed, target, moves + 1);
+			withA = 1 + raceDP(speed * 2, pos + speed, target);
 		else
-			withR = raceDP((speed > 0 ? - 1 : 1), pos, target, moves + 1);
+			withR = 1 + raceDP((speed > 0 ? - 1 : 1), pos, target);
 		
 		int min = Math.min(withA, withR);
 		memo.put(speed + "-" + pos, min);

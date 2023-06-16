@@ -1,4 +1,4 @@
-package com.algo.twopointer;
+package com.algo.priorityqueue;
 
 import java.util.*;
 
@@ -8,6 +8,9 @@ public class MeetingRoomsIII {
 		int n = 2;
 		int[][] meetings = { { 0, 10 }, { 1, 2 }, { 12, 14 }, { 13, 15 } };
 		int[][] meetingsTestCase1 = { { 0, 10 }, { 1, 2 }, { 8, 16 }, { 9, 20 }, { 12, 14 }, { 13, 15 } };
+		System.out.println(new MeetingRoomsIII().mostBookedOld(n, meetings));
+		System.out.println(new MeetingRoomsIII().mostBookedOld(n, meetingsTestCase1));
+		System.out.println(new MeetingRoomsIII().mostBooked(n, meetings));
 		System.out.println(new MeetingRoomsIII().mostBooked(n, meetingsTestCase1));
 	}
 

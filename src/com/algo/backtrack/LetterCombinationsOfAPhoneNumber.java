@@ -1,4 +1,4 @@
-package com.algo.dp;
+package com.algo.backtrack;
 
 import java.util.*;
 
