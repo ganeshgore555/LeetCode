@@ -68,41 +68,41 @@ public class MostStonesRemovedWithSameRowOrColumn {
     // Union Find
     
     // Returns the representative of vertex x
-    int find(int[] rep, int x) {
-        if (x == rep[x]) {
+    int find(int[] group, int x) {
+        if (x == group[x]) {
             return x;
         }
         // Uses Path compression
-        return rep[x] = find(rep, rep[x]);
+        return group[x] = find(group, group[x]);
     }
     
     // Combine the stone x and y, and returns 1 if they were not connected
-    int performUnion(int [] rep, int [] size, int x, int y) {
-        x = find(rep, x);
-        y = find(rep, y);
+    int performUnion(int [] group, int [] rank, int x, int y) {
+        x = find(group, x);
+        y = find(group, y);
         
         if (x == y) {
             return 0;
         }
         
-        if (size[x] > size[y]) {
-            rep[y] = x;
-            size[x] += size[y];
+        if (rank[x] > rank[y]) {
+            group[y] = x;
+            rank[x] += rank[y];
         } else {
-            rep[x] = y;
-            size[y] += size[x];
+            group[x] = y;
+            rank[y] += rank[x];
         }
         
         return 1;
     }
     
     public int removeStonesUnionFind(int[][] stones) {
-        int[] rep = new int[stones.length];
-        int[] size = new int[stones.length];
-        // Initialize rep to itself and size as 1
+        int[] group = new int[stones.length];
+        int[] rank = new int[stones.length];
+        // Initialize group to itself and rank as 1
         for (int i = 0; i < stones.length; i++) {
-            rep[i] = i;
-            size[i] = 1;
+            group[i] = i;
+            rank[i] = 1;
         }
         
         int componentCount = stones.length;
@@ -110,7 +110,7 @@ public class MostStonesRemovedWithSameRowOrColumn {
             for (int j = i + 1; j < stones.length; j++) {
                 if (shareSameRowOrColumn(stones[i], stones[j])) {
                     // Decrement the componenets if union invloved merging
-                    componentCount -= performUnion(rep, size, i, j);
+                    componentCount -= performUnion(group, rank, i, j);
                 }
             }
         }
