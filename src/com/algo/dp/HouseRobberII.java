@@ -28,10 +28,11 @@ public class HouseRobberII {
 		if(n == 0 && last)
 			return 0;
 		
-		if(map.containsKey(n+""+last))
-			return map.get(n+""+last);
+		String key = n+""+last;
+		if(map.containsKey(key))
+			return map.get(key);
 		
-		map.put(n+""+last, Math.max(robRecursive(n - 2, last) + nums[n], robRecursive(n - 1, last)));
-		return map.get(n+""+last);
+		map.put(key, Math.max(robRecursive(n - 2, last) + nums[n], robRecursive(n - 1, last)));
+		return map.get(key);
 	}
 }

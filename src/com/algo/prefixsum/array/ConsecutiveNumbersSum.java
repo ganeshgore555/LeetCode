@@ -3,7 +3,7 @@ package com.algo.prefixsum.array;
 public class ConsecutiveNumbersSum {
 
 	public static void main(String[] args) {
-
+		System.out.println(new ConsecutiveNumbersSum().consecutiveNumbersSum2(5));
 	}
 
 	// n = (x + 1) + ... + (x + k)

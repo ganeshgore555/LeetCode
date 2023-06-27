@@ -5,40 +5,34 @@ import java.util.*;
 public class DecodeWaysIV {
 
 	public static void main(String[] args) {
-		new DecodeWaysIV().possibleDecodings("*");
+		System.out.println(new DecodeWaysIV().numDecodings("**2"));
 	}
-
-	
-    public void possibleDecodings(String s) {
-		ArrayList<String> result = new ArrayList<>();
-		StringBuffer buffer = new StringBuffer();
-		char[] map = "0ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
-		possibleDecodingsBacktrack(0,s,map,result,buffer);
-		result.stream().forEach(System.out::println);
+   
+    int M = 1000000007;
+    public int numDecodings(String s) {
+        long first = 1, second = s.charAt(0) == '*' ? 9 : s.charAt(0) == '0' ? 0 : 1;
+        for (int i = 1; i < s.length(); i++) {
+            long temp = second;
+            if (s.charAt(i) == '*') {
+                second = 9 * second % M;
+                if (s.charAt(i - 1) == '1')
+                    second = (second + 9 * first) % M;
+                else if (s.charAt(i - 1) == '2')
+                    second = (second + 6 * first) % M;
+                else if (s.charAt(i - 1) == '*')
+                    second = (second + 15 * first) % M;
+            } else {
+                second = s.charAt(i) != '0' ? second : 0;
+                if (s.charAt(i - 1) == '1')
+                    second = (second + first) % M;
+                else if (s.charAt(i - 1) == '2' && s.charAt(i) <= '6')
+                    second = (second + first) % M;
+                else if (s.charAt(i - 1) == '*')
+                    second = (second + (s.charAt(i) <= '6' ? 2 : 1) * first) % M;
+            }
+            first = temp;
+        }
+        return (int) second;
     }
-    
-	private void possibleDecodingsBacktrack(int start, String digits, char[] map, ArrayList<String> result, StringBuffer buffer) {
-		if(start == digits.length()) {
-			result.add(buffer.toString());
-			return;
-		}
-		
-		for(int i = start+1; i <= digits.length(); i++) {
-			String num = digits.substring(start,i);
-			
-			if(num.charAt(i-1) == '*') {
-				for(int j = 0; j <= 9; j++) {
-					
-				}
-			}else {
-				if(num.startsWith("0") || Integer.parseInt(num) > 26)
-					break;
-				buffer.append(map[Integer.parseInt(num)]);
-				possibleDecodingsBacktrack(i,digits,map,result,buffer);
-				buffer.deleteCharAt(buffer.length()-1);
-			}
-		}		
-
-	}
     
 }

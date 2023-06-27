@@ -5,7 +5,7 @@ import java.util.*;
 public class DecodeWaysII {
 
 	public static void main(String[] args) {
-		System.out.println(new DecodeWaysII().numDecodings("121"));
+		System.out.println(new DecodeWaysII().numDecodings("1*1"));
 	}
 
     int M = 1000000007;

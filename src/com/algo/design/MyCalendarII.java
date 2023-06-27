@@ -22,17 +22,20 @@ public class MyCalendarII {
 	TreeMap<Integer,Integer> calendar = new TreeMap<>();
 	
     public boolean book(int start, int end) {
-    	calendar.put(start, calendar.getOrDefault(start, 0) + 1);
+        calendar.put(start, calendar.getOrDefault(start, 0) + 1);
         calendar.put(end, calendar.getOrDefault(end, 0) - 1);
-
-        int active = 0;
-        for (int d: calendar.values()) {
-            active += d;
-            if (active >= 3) {
+        int count = 0;
+        for(Map.Entry<Integer, Integer> entry : calendar.entrySet()) {
+            count += entry.getValue();
+            if(count > 2) {
                 calendar.put(start, calendar.get(start) - 1);
-                calendar.put(end, calendar.get(end) + 1);
-                if (calendar.get(start) == 0)
+                if(calendar.get(start) == 0) {
                     calendar.remove(start);
+                }
+                calendar.put(end, calendar.get(end) + 1);
+                if(calendar.get(end) == 0) {
+                    calendar.remove(end);
+                }
                 return false;
             }
         }

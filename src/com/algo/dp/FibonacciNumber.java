@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class FibonacciNumber {
 
 	public static void main(String[] args) {
-		System.out.println(new FibonacciNumber().fib(5));
+		System.out.println(new FibonacciNumber().fib(12));
 	}
 	HashMap<Integer,Integer> map = new HashMap<>();
     public int fib(int n) {

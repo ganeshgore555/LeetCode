@@ -7,8 +7,9 @@ import java.util.LinkedList;
 public class CourseSchedule {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		int[][] prerequisites = {{1,0},{2,0},{3,1},{3,2}};
+		int numCourses = 4;
+		System.out.println(new CourseSchedule().canFinish(numCourses, prerequisites));		
 	}
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {

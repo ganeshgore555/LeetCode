@@ -3,8 +3,8 @@ package com.algo.dp;
 public class BestTimeToBuyAndSellStockII {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		int[] prices = {7,1,5,3,6,4};
+		System.out.println(new BestTimeToBuyAndSellStockII().maxProfit(prices));
 	}
 
     public int maxProfitPeakValley(int[] prices) {

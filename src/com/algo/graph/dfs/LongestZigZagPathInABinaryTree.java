@@ -38,28 +38,25 @@ public class LongestZigZagPathInABinaryTree {
     }
 	
 	
-    public int longestZigZag(TreeNode root) {
-    	//return Math.max(longestZigZagDFS(root.left,true),longestZigZagDFS(root.right,false));
-    	return longestZigZagDFS(root)[2];
+    int pathLength = 0;
+    private void dfs(TreeNode node, boolean goLeft, int steps) {
+        if (node == null) {
+            return;
+        }
+        pathLength = Math.max(pathLength, steps);
+        if (goLeft) {
+            dfs(node.left, false, steps + 1);
+            dfs(node.right, true, 1);
+        } else {
+            dfs(node.left, false, 1);
+            dfs(node.right, true, steps + 1);
+        }
     }
 
-	private int longestZigZagDFS(TreeNode node, boolean isLeft) {
-		if(node == null)
-			return 0;
-		else if(isLeft){
-			return Math.max(1 + longestZigZagDFS(node.right, false), longestZigZagDFS(node.left, true));
-		}else {
-			return Math.max(1 + longestZigZagDFS(node.left, true), longestZigZagDFS(node.right, false));
-		}
-	}
-	
-    private int[] longestZigZagDFS(TreeNode root) {
-        if (root == null)
-        	return new int[]{-1, -1, -1};
-        int[] leftSubTree = longestZigZagDFS(root.left);
-        int[] rightSubTree = longestZigZagDFS(root.right);
-        int res = Math.max(Math.max(leftSubTree[1], rightSubTree[0]) + 1, Math.max(leftSubTree[2], rightSubTree[2]));
-        return new int[]{leftSubTree[1] + 1, rightSubTree[0] + 1, res};
+    public int longestZigZag(TreeNode root) {
+        dfs(root, false, 0);
+        dfs(root, true, 0);
+        return pathLength;
     }
 	
 	

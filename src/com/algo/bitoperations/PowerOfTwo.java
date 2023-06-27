@@ -3,7 +3,7 @@ package com.algo.bitoperations;
 public class PowerOfTwo {
 
 	public static void main(String[] args) {
-		System.out.println(new PowerOfTwo().isPowerOfTwo(2));
+		System.out.println(new PowerOfTwo().isPowerOfTwo(16));
 	}
     public boolean isPowerOfTwo(int n) {
     	long l = (long) n;

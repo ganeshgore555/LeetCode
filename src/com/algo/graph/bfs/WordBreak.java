@@ -18,7 +18,7 @@ public class WordBreak {
 		ArrayList<String> list = new ArrayList<>(List.of(wordDict));
 		System.out.println(new WordBreak().wordBreak(s, list));
 	}
-		
+	
     public boolean wordBreak(String s, List<String> wordDict) {
         Set<String> wordDictSet = new HashSet<>(wordDict);
         Queue<Integer> queue = new LinkedList<>();

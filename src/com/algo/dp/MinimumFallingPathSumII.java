@@ -5,8 +5,8 @@ import java.util.HashMap;
 public class MinimumFallingPathSumII {
 
 	public static void main(String[] args) {
-		int[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
-		//int[][] matrix = {{7}};
+		//int[][] matrix = {{1,2,3},{4,5,6},{7,8,9}};
+		int[][] matrix = {{7}};
 		System.out.println(new MinimumFallingPathSumII().minFallingPathSum(matrix));
 	}
 
@@ -17,12 +17,12 @@ public class MinimumFallingPathSumII {
     	int min = Integer.MAX_VALUE;
     	this.matrix = matrix;
     	for(int i = 0; i < matrix[0].length; i++)
-    		min = Math.min(min, minFallingPathSumRecursive(matrix.length-1,i));
+    		min = Math.min(min, minFallingPathSumRecursive(0,i));
 		return min;
     }
 
 	private int minFallingPathSumRecursive(int n, int i) {
-		if(n < 0)
+		if(n == matrix.length)
 			return 0;
 		
 		if(map.containsKey(n+"-"+i))
@@ -32,7 +32,7 @@ public class MinimumFallingPathSumII {
 		
 		for(int col = 0; col < matrix[0].length; col++) {
 			if(i != col)
-				prevMin = Math.min(prevMin, minFallingPathSumRecursive(n-1, col));
+				prevMin = Math.min(prevMin, minFallingPathSumRecursive(n+1, col));
 		}
 		int result = matrix[n][i] + prevMin;
 		

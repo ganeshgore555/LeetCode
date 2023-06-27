@@ -28,7 +28,7 @@ public class RomanToInteger {
 
         String prevChar = chars[0] + "";
         int num = 0;
-        int temp = values.get(prevChar+"");
+        int temp = values.get(prevChar);
         num = temp;
         for(int i = 1; i < chars.length; i++) {
     		if(prevChar != "" && values.get(prevChar + chars[i] + "") != null) {
