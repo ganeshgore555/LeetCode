@@ -8,48 +8,8 @@ public class MeetingRoomsIII {
 		int n = 2;
 		int[][] meetings = { { 0, 10 }, { 1, 2 }, { 12, 14 }, { 13, 15 } };
 		int[][] meetingsTestCase1 = { { 0, 10 }, { 1, 2 }, { 8, 16 }, { 9, 20 }, { 12, 14 }, { 13, 15 } };
-		System.out.println(new MeetingRoomsIII().mostBookedOld(n, meetings));
-		System.out.println(new MeetingRoomsIII().mostBookedOld(n, meetingsTestCase1));
 		System.out.println(new MeetingRoomsIII().mostBooked(n, meetings));
 		System.out.println(new MeetingRoomsIII().mostBooked(n, meetingsTestCase1));
-	}
-
-	public int mostBookedOld(int n, int[][] meetings) {
-		Arrays.sort(meetings, (a, b) -> a[0] - b[0]);
-		PriorityQueue<Integer> rooms = new PriorityQueue<>();
-		PriorityQueue<Integer[]> roomAlloted = new PriorityQueue<>((a, b) -> (a[0] - b[0]));
-		int[] usage = new int[n];
-
-		for (int i = 0; i < n; i++)
-			rooms.offer(i);
-
-		int meetingNo = 0;
-		int time = 0;
-		while (meetingNo < meetings.length) {
-			if (!roomAlloted.isEmpty() && roomAlloted.peek()[0] <= time) {
-				rooms.offer(roomAlloted.poll()[2]);
-			}
-			if (meetings[meetingNo][0] <= time && !rooms.isEmpty()) {
-				Integer roomAvail = rooms.poll();
-				Integer endTime = (meetings[meetingNo][1] - meetings[meetingNo][0]) + time;
-				usage[roomAvail]++;
-				Integer[] allotRoom = { endTime, meetingNo, roomAvail };
-				roomAlloted.offer(allotRoom);
-				meetingNo++;
-			}
-			time++;
-		}
-
-		int max = 0;
-		int maxRoom = 0;
-		for (int i = 0; i < n; i++) {
-			if (usage[i] > max) {
-				max = usage[i];
-				maxRoom = i;
-			}
-
-		}
-		return maxRoom;
 	}
 
 	public int mostBooked(int n, int[][] meetings) {

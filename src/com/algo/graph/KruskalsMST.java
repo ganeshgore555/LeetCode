@@ -19,14 +19,45 @@ public class KruskalsMST {
     }
  
     // Defines subset element structure
-    static class Subset {
-        int parent, rank;
+    class UnionFind {
+        int[] group, rank;
  
-        public Subset(int parent, int rank)
+        public UnionFind(int n)
         {
-            this.parent = parent;
-            this.rank = rank;
+        	group = new int[n];
+        	rank = new int[n];
+        	for(int i = 0; i < n; i++) {
+		        this.group[i] = i;
+		        this.rank[i] = 0;
+        	}
         }
+        
+        // Function to unite two disjoint sets
+        void union(int x, int y)
+        {
+            int groupX = find(x);
+            int groupY = find(y);
+     
+            if (rank[y] < rank[x]) {
+            	group[y] = groupX;
+            }
+            else if (group[x] < group[y]) {
+            	group[x] = groupY;
+            }
+            else {
+            	group[y] = groupX;
+                rank[x]++;
+            }
+        }
+     
+        // Function to find group of a set
+        int find(int i)
+        {
+            if (group[i] != i)
+            	group[i] = find(group[i]);
+     
+            return group[i];
+        }        
     }
  
     // Starting point of program execution
@@ -46,48 +77,45 @@ public class KruskalsMST {
                 return o1.weight - o2.weight;
             }
         });
- 
-        kruskals(V, graphEdges);
+        
+        KruskalsMST obj = new KruskalsMST();
+        
+        obj.kruskals(V, graphEdges);
     }
  
     // Function to find the MST
-    private static void kruskals(int V, List<Edge> edges)
+    private void kruskals(int V, List<Edge> edges)
     {
         int j = 0;
         int noOfEdges = 0;
  
         // Allocate memory for creating V subsets
-        Subset subsets[] = new Subset[V];
+        UnionFind uf = new UnionFind(V);
  
         // Allocate memory for results
         Edge results[] = new Edge[V];
- 
-        // Create V subsets with single elements
-        for (int i = 0; i < V; i++) {
-            subsets[i] = new Subset(i, 0);
-        }
- 
+  
         // Number of edges to be taken is equal to V-1
         while (noOfEdges < V - 1) {
  
             // Pick the smallest edge. And increment
             // the index for next iteration
             Edge nextEdge = edges.get(j);
-            int x = findRoot(subsets, nextEdge.src);
-            int y = findRoot(subsets, nextEdge.dest);
+            int x = uf.find(nextEdge.src);
+            int y = uf.find(nextEdge.dest);
  
             // If including this edge doesn't cause cycle,
             // include it in result and increment the index
             // of result for next edge
             if (x != y) {
                 results[noOfEdges] = nextEdge;
-                union(subsets, x, y);
+                uf.union(x, y);
                 noOfEdges++;
             }
  
             j++;
         }
- 
+        
         // Print the contents of result[] to display the
         // built MST
         System.out.println(
@@ -100,36 +128,5 @@ public class KruskalsMST {
             minCost += results[i].weight;
         }
         System.out.println("Total cost of MST: " + minCost);
-    }
- 
-    // Function to unite two disjoint sets
-    private static void union(Subset[] subsets, int x,
-                              int y)
-    {
-        int rootX = findRoot(subsets, x);
-        int rootY = findRoot(subsets, y);
- 
-        if (subsets[rootY].rank < subsets[rootX].rank) {
-            subsets[rootY].parent = rootX;
-        }
-        else if (subsets[rootX].rank
-                 < subsets[rootY].rank) {
-            subsets[rootX].parent = rootY;
-        }
-        else {
-            subsets[rootY].parent = rootX;
-            subsets[rootX].rank++;
-        }
-    }
- 
-    // Function to find parent of a set
-    private static int findRoot(Subset[] subsets, int i)
-    {
-        if (subsets[i].parent == i)
-            return subsets[i].parent;
- 
-        subsets[i].parent
-            = findRoot(subsets, subsets[i].parent);
-        return subsets[i].parent;
-    }
+    } 
 }
