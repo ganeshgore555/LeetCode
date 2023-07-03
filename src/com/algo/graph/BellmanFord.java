@@ -9,12 +9,12 @@ public class BellmanFord {
 	// three values u, v and w.
 	static void BellmanFord(int graph[][], int V, int E, int src) {
 		// Initialize distance of all vertices as infinite.
-		int[] dis = new int[V];
+		int[] dist = new int[V];
 		for (int i = 0; i < V; i++)
-			dis[i] = Integer.MAX_VALUE;
+			dist[i] = Integer.MAX_VALUE;
 
 		// initialize distance of source as 0
-		dis[src] = 0;
+		dist[src] = 0;
 
 		// Relax all edges |V| - 1 times. A simple
 		// shortest path from src to any other
@@ -22,8 +22,8 @@ public class BellmanFord {
 		for (int i = 0; i < V - 1; i++) {
 
 			for (int j = 0; j < E; j++) {
-				if (dis[graph[j][0]] != Integer.MAX_VALUE && dis[graph[j][0]] + graph[j][2] < dis[graph[j][1]])
-					dis[graph[j][1]] = dis[graph[j][0]] + graph[j][2];
+				if (dist[graph[j][0]] != Integer.MAX_VALUE && dist[graph[j][0]] + graph[j][2] < dist[graph[j][1]])
+					dist[graph[j][1]] = dist[graph[j][0]] + graph[j][2];
 			}
 		}
 
@@ -36,13 +36,13 @@ public class BellmanFord {
 			int x = graph[i][0];
 			int y = graph[i][1];
 			int weight = graph[i][2];
-			if (dis[x] != Integer.MAX_VALUE && dis[x] + weight < dis[y])
+			if (dist[x] != Integer.MAX_VALUE && dist[x] + weight < dist[y])
 				System.out.println("Graph contains negative" + " weight cycle");
 		}
 
 		System.out.println("Vertex Distance from Source");
 		for (int i = 0; i < V; i++)
-			System.out.println(i + "\t\t" + dis[i]);
+			System.out.println(i + "\t\t" + dist[i]);
 	}
 
 	// Driver code
