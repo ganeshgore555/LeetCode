@@ -24,20 +24,20 @@ public class MinimumNumberOfWorkSessionsToFinishTheTasks {
         return res;
     }
     
-    private void dfs(int taskID, int sessionCount) {
-        if (sessionCount > res) return; //prune, if we didn't use prune, it will be 2200ms, if lucky you get ac
+    private void dfs(int taskID, int sessionNo) {
+        if (sessionNo > res) return; //prune, if we didn't use prune, it will be 2200ms, if lucky you get ac
         if (taskID == -1) {
-            res = Math.min(res, sessionCount);
+            res = Math.min(res, sessionNo);
             return;
         }
-        for (int i = 0; i < sessionCount; i++)
+        for (int i = 0; i < sessionNo; i++)
             if (sessions[i] + tasks[taskID] <= maxSessionTime) { //put task into old session bucket
                 sessions[i] += tasks[taskID];
-                dfs(taskID - 1, sessionCount);
+                dfs(taskID - 1, sessionNo);
                 sessions[i] -= tasks[taskID];
             }
-        sessions[sessionCount] += tasks[taskID]; //put task into new empty session bucket
-        dfs(taskID - 1, sessionCount + 1);
-        sessions[sessionCount] -= tasks[taskID];
+        sessions[sessionNo] += tasks[taskID]; //put task into new empty session bucket
+        dfs(taskID - 1, sessionNo + 1);
+        sessions[sessionNo] -= tasks[taskID];
     }
 }

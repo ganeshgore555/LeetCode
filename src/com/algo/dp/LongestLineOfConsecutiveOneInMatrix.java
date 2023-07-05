@@ -3,7 +3,9 @@ package com.algo.dp;
 public class LongestLineOfConsecutiveOneInMatrix {
 
 	public static void main(String[] args) {
-		int[][] mat = {{1,1,1,1},{0,1,1,0},{0,0,0,1}};
+		int[][] mat = 	{{1,1,1,1}
+						,{0,1,1,0}
+						,{0,0,0,1}};
 		System.out.println(new LongestLineOfConsecutiveOneInMatrix().longestLine(mat));
 	}
 

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class MinimumKnightMoves {
 
 	public static void main(String[] args) {
-		int x = 1, y = 1;
+		int x = 10, y = 1;
 		System.out.println(new MinimumKnightMoves().minKnightMoves(x, y));
 	}
 

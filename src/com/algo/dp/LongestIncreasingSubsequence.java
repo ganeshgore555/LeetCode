@@ -5,7 +5,7 @@ import java.util.*;
 public class LongestIncreasingSubsequence {
 
 	public static void main(String[] args) {
-		int[] nums = {10,9,2,5,3,7,101,18};
+		int[] nums = {9,10,2,5,6,7,101,18};
 		System.out.println(new LongestIncreasingSubsequence().lengthOfLIS(nums));
 	}
 

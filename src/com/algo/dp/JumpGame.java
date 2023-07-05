@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class JumpGame {
 
 	public static void main(String[] args) {
-		int[] nums = {1,0,1};
+		int[] nums = {1,2,1,1,1};
 		System.out.println(new JumpGame().canJump(nums));
 	}
 
@@ -28,7 +28,8 @@ public class JumpGame {
 			return map.get(n);
 			
 		boolean jump = false;
-		for(int i = nums[n]; i > 0; i--) {
+		int jumpAllowed = nums[n];
+		for(int i = jumpAllowed; i > 0; i--) {
 			 jump = canJumpRecursive(n+i);
 			 if(jump)
 				 break;

@@ -5,7 +5,7 @@ import java.util.*;
 public class SortIntegersByThePowerValue {
 
 	public static void main(String[] args) {
-		int lo = 12, hi = 15, k = 2;
+		int lo = 2, hi = 10, k = 2;
 		System.out.println(new SortIntegersByThePowerValue().getKth(lo, hi, k));
 	}
 

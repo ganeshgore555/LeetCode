@@ -9,8 +9,12 @@ public class FillingBookcaseShelves {
 		//int shelfWidth = 4;
 		int[][] books = {{7,3},{7,7},{2,7},{1,6},{2,5}};
 		int shelfWidth = 10;
+    	long t = System.nanoTime();
 		System.out.println(new FillingBookcaseShelves().minHeightShelves(books, shelfWidth));
+		System.out.println("Time: " + (System.nanoTime()-t));
+		t = System.nanoTime();
 		System.out.println(new FillingBookcaseShelves().minHeightShelvesTopDownRecursive(books, shelfWidth));
+		System.out.println("Time: " + (System.nanoTime()-t));
 	}
 
     public int minHeightShelves(int[][] books, int shelf_width) {

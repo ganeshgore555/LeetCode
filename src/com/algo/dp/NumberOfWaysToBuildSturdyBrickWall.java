@@ -38,16 +38,16 @@ public class NumberOfWaysToBuildSturdyBrickWall {
         return helper(new Integer[height + 1][1 << width], bricks, height, width, 1, 0, 0, 0);
     }
 
-    private int helper(Integer cache[][], int[] bricks, int targetHeight, int targetWidth, int currHeight, int currWidth, int prevJoins, int currJoins) {
+    private int helper(Integer memo[][], int[] bricks, int targetHeight, int targetWidth, int currHeight, int currWidth, int prevJoins, int currJoins) {
         if (currHeight == targetHeight && currWidth == targetWidth) return 1;
         
         // Start with the next row if we are done with the current one.
         if (currWidth == targetWidth) {
-            return helper(cache, bricks, targetHeight, targetWidth, currHeight + 1, 0, currJoins, 0);
+            return helper(memo, bricks, targetHeight, targetWidth, currHeight + 1, 0, currJoins, 0);
         }
         // Use a cached solution if avaialble.
-        if (currWidth == 0 && cache[currHeight][prevJoins] != null) {
-            return cache[currHeight][prevJoins];
+        if (currWidth == 0 && memo[currHeight][prevJoins] != null) {
+            return memo[currHeight][prevJoins];
         }
         
         int result = 0;
@@ -56,13 +56,13 @@ public class NumberOfWaysToBuildSturdyBrickWall {
             if (targetWidth < endOfCurrentBrick) break;  // We can stop early if the current brick doesn't fit.
             if ((prevJoins & (1 << endOfCurrentBrick)) == 0) {            	
                 if (endOfCurrentBrick < targetWidth) currJoins |= (1 << endOfCurrentBrick);     // Set i-th bit to 1.
-                result += helper(cache, bricks, targetHeight, targetWidth, currHeight, endOfCurrentBrick, prevJoins, currJoins) % 1_000_000_007;
+                result += helper(memo, bricks, targetHeight, targetWidth, currHeight, endOfCurrentBrick, prevJoins, currJoins) % 1_000_000_007;
                 result %= 1_000_000_007;        
                 if (endOfCurrentBrick < targetWidth) currJoins &= ~(1 << endOfCurrentBrick);    // Backtrack. Set i-th bit to 0.
                 
             }
         }
-        return currWidth == 0 ? cache[currHeight][prevJoins] = result : result;
+        return currWidth == 0 ? memo[currHeight][prevJoins] = result : result;
     }    
     
     

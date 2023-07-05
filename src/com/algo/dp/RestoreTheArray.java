@@ -3,8 +3,9 @@ package com.algo.dp;
 public class RestoreTheArray {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		String s = "1317";
+		int k = 100;
+		System.out.println(new RestoreTheArray().numberOfArrays(s, k));
 	}
 
     public int numberOfArrays(String s, int k) {
@@ -19,6 +20,7 @@ public class RestoreTheArray {
         long num = 0;
         for (int j = i; j < s.length(); j++) {
             num = num * 10 + s.charAt(j) - '0'; // num is the value of the substring s[i..j]
+            //System.out.println(num);
             if (num > k) break; // num must be in range [1, k]
             ans += numberOfArraysDFS(s, k, j + 1, memo);
             ans %= 1_000_000_007;

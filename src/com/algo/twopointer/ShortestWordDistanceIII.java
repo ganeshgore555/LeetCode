@@ -1,6 +1,5 @@
 package com.algo.twopointer;
 
-import java.util.HashMap;
 
 public class ShortestWordDistanceIII {
 
@@ -11,28 +10,8 @@ public class ShortestWordDistanceIII {
 		System.out.println(new ShortestWordDistanceIII().shortestWordDistance(wordsDict, word1, word2));
 	}
 
-    public int shortestWordDistance(String[] wordsDict, String word1, String word2) {
-
-		int min = Integer.MAX_VALUE;
-		HashMap<String, Integer> map = new HashMap();
-		for(int i = 0; i < wordsDict.length; i++ ) {
-			if(wordsDict[i] == word1 || wordsDict[i] == word2) {
-				if(word1 == word2) { 
-					Integer prev = map.get(word1);
-					min = prev != null ? Math.min(min, Math.abs(i - prev)) : min;
-					map.put(wordsDict[i], i);
-				}else {
-					map.put(wordsDict[i], i);
-					if(map.get(word1) != null && map.get(word2) != null) {
-						min = Math.min(min, Math.abs(map.get(word2) - map.get(word1)));
-					}
-				}
-			}						
-		}
-		return min;
-    }
         
-    public int shortestWordDistance1(String[] words, String word1, String word2) {
+    public int shortestWordDistance(String[] words, String word1, String word2) {
         int index = -1;
         int min = words.length;
         for (int i = 0; i < words.length; i++) {
