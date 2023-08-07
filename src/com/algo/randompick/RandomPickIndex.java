@@ -17,10 +17,7 @@ public class RandomPickIndex {
         this.indices = new HashMap<Integer, List<Integer>>();
         int l = nums.length;
         for (int i = 0; i < l; ++i) {
-            if (!this.indices.containsKey(nums[i])) {
-                this.indices.put(nums[i], new ArrayList<>());
-            }
-            this.indices.get(nums[i]).add(i);
+            indices.computeIfAbsent(nums[i], value -> new ArrayList<Integer>()).add(i);
         }
     }
     
